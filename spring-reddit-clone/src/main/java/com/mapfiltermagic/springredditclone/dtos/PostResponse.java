@@ -1,4 +1,4 @@
-package com.mapfiltermagic.springredditclone.dto;
+package com.mapfiltermagic.springredditclone.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
