@@ -1,4 +1,4 @@
-package com.mapfiltermagic.springredditclone.dto;
+package com.mapfiltermagic.springredditclone.dtos;
 
 import java.time.Instant;
 

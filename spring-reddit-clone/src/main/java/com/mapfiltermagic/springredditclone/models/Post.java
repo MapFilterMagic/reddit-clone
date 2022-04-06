@@ -46,7 +46,7 @@ public class Post {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
-    private Subreddit Subreddit;
+    private Subreddit subreddit;
 
     private Integer voteCount;
     private Instant createdDate;
