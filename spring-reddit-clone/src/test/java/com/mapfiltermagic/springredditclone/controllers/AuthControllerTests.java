@@ -48,4 +48,16 @@ public class AuthControllerTests {
 			.andExpect(MockMvcResultMatchers.content().string("User registration was successful."));
 	}
 
+	@Test
+	public void verifyAccount_happyPath_shouldReturnAnHttp200() throws Exception {
+		String token = "1d3598e0-b54a-11ec-b909-0242ac120002";
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/auth/accountVerification/" + token)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+            .andDo(MockMvcResultHandlers.print())
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.content().string("Account was activated successfully."));
+	}
+
 }

@@ -6,6 +6,8 @@ import com.mapfiltermagic.springredditclone.services.validators.RegistrationRequ
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +21,11 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(value = "/api/v1/auth")
 @CrossOrigin
 public class AuthController {
-    
+
+    private static final String ACCOUNT_ACTIVATION_SUCCESS_MSG = "Account was activated successfully.";
     private static final String USER_REGISTRATION_SUCCESS_MSG = "User registration was successful.";
 
     private final RegistrationRequestValidator registrationRequestValidator;
@@ -40,6 +43,13 @@ public class AuthController {
         authService.signup(registrationRequest);
 
         return USER_REGISTRATION_SUCCESS_MSG;
+    }
+
+    @GetMapping("/accountVerification/{token}")
+    public String verifyAccount(@PathVariable String token) {
+        authService.verifyAccount(token);
+
+        return ACCOUNT_ACTIVATION_SUCCESS_MSG;
     }
 
 }
