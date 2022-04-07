@@ -1,9 +1,12 @@
 package com.mapfiltermagic.springredditclone.controllers;
 
+import com.mapfiltermagic.springredditclone.dtos.AuthenticationResponse;
+import com.mapfiltermagic.springredditclone.dtos.LoginRequest;
 import com.mapfiltermagic.springredditclone.dtos.RegistrationRequest;
 import com.mapfiltermagic.springredditclone.services.AuthService;
 import com.mapfiltermagic.springredditclone.services.validators.RegistrationRequestValidator;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +53,11 @@ public class AuthController {
         authService.verifyAccount(token);
 
         return ACCOUNT_ACTIVATION_SUCCESS_MSG;
+    }
+
+    @PostMapping("/login")
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 
 }

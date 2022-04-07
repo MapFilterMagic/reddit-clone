@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.mapfiltermagic.springredditclone.dtos.AuthenticationResponse;
+import com.mapfiltermagic.springredditclone.dtos.LoginRequest;
 import com.mapfiltermagic.springredditclone.dtos.RegistrationRequest;
 import com.mapfiltermagic.springredditclone.models.NotificationEmail;
 import com.mapfiltermagic.springredditclone.models.User;
@@ -11,6 +13,7 @@ import com.mapfiltermagic.springredditclone.models.VerificationToken;
 import com.mapfiltermagic.springredditclone.repositories.UserRepository;
 import com.mapfiltermagic.springredditclone.repositories.VerificationTokenRepository;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,15 @@ public class AuthService {
     private final UserRepository userRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailService mailService;
+
+    /**
+     * 
+     * @param loginRequest
+     * @return
+     */
+    public AuthenticationResponse login(LoginRequest loginRequest) {
+        throw new NotImplementedException();
+    }
 
     /**
      * Constructs an activation email based on a user signup information and dispatches it.
