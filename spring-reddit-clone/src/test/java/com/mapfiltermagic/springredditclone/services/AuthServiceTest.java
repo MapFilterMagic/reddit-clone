@@ -5,13 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.Optional;
+
 import com.mapfiltermagic.springredditclone.dtos.RegistrationRequest;
 import com.mapfiltermagic.springredditclone.models.NotificationEmail;
 import com.mapfiltermagic.springredditclone.models.User;
+import com.mapfiltermagic.springredditclone.models.VerificationToken;
 import com.mapfiltermagic.springredditclone.repositories.UserRepository;
 import com.mapfiltermagic.springredditclone.repositories.VerificationTokenRepository;
 
@@ -90,6 +95,29 @@ public class AuthServiceTest {
 				() -> authService.signup(registrationRequest));
 		assertEquals(HttpStatus.SERVICE_UNAVAILABLE, exception.getStatus());
 		assertEquals(exceptionMessage, exception.getReason());
+	}
+
+	@Test
+	public void verifyAccount_happyPath_shouldNotThrowAnException() {
+		String token = "83e32b36-b54d-11ec-b909-0242ac120002";
+
+		User user = new User();
+		user.setEmail("johnsmith@example.net");
+		user.setUsername("chocolate2731");
+		user.setPassword("s999x%HIIII");
+		Optional<User> userOptional = Optional.of(user);
+
+		VerificationToken verificationToken = new VerificationToken();
+		verificationToken.setUser(user);
+
+		doReturn(Optional.of(verificationToken)).when(verificationTokenRepository).findByToken(anyString());
+		doReturn(userOptional).when(userRepository).findByUsername(anyString());
+
+		assertDoesNotThrow(() -> authService.verifyAccount(token));
+
+		// Ensure the expected services were invoked.
+		verify(verificationTokenRepository, times(1)).findByToken(anyString());
+		verify(userRepository, times(1)).save(any(User.class));
 	}
 
 }
